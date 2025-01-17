@@ -13,7 +13,7 @@ function App() {
 
   return (
     <>
-      <Clock time={new Date()} />
+      <Clock />
       <Counter />
       <ColorPicker array={colors} />
       <ToDoList todosData={todosData} />
