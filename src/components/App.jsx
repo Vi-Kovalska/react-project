@@ -4,7 +4,10 @@ import clsx from "clsx";
 import Clock from './Clock/Clock'
 import Counter from './Counter/Counter';
 import ColorPicker from './ColorPicker/ColorPicker';
-import colors from '../colors.json'
+import ToDoList from './ToDoList/ToDoList';
+
+import colors from '../colors.json';
+import todosData from '../todo.json';
 
 function App() {
 
@@ -12,7 +15,8 @@ function App() {
     <>
       <Clock time={new Date()} />
       <Counter />
-      <ColorPicker array={colors}/>
+      <ColorPicker array={colors} />
+      <ToDoList todosData={todosData} />
     </>
   )
 }

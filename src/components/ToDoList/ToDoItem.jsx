@@ -1,12 +1,13 @@
 import React from 'react'
 import s from './ToDoList.module.css'
 
-const ToDoItem = ({id, completed, todo}) => {
+const ToDoItem = ({id, completed, task, handleDelete}) => {
   return (
       <li key={id}>
-          <input type="checkbox" />
-          <span>{todo}</span>
-          <button>DELETE</button>
+          {/*  checked={completed === 'true' ? 'checked' : ""} */}
+          <input type="checkbox" /> 
+          <span>{task}</span>
+          <button onClick={() => handleDelete(id)}>DELETE</button>
     </li>
   )
 }
