@@ -5,13 +5,15 @@ import { useState } from 'react';
 const Counter = () => {
     const [count, setCount] = useState(0);
     const handlePlusClick = () => {
-        setCount(count+1);
+// замість такого перезапису значення змінної setCount(count +1) краще використовувати зміну через колбек ф-цію де агрумент завжди це попередній стан каунт - previusState
+        setCount(prev => prev +1);
     }
-     const handleResetClick = () => {
+    const handleResetClick = () => {
+        //  якщо просто обнуляємо то початкове значення не важливе, можна просто вказати 0
          setCount(0);
     }
      const handleMinusClick = () => {
-         setCount(count-1);
+         setCount(prev => prev - 1);
     }
     return (
         <>
