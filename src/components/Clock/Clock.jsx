@@ -18,16 +18,15 @@ export default function Clock() {
   } else {
     classNames = 'day';
   }
-
+  
   useEffect(() => {
     const intID = setInterval(() => { setTime(new Date()) }, 1000);
     return () => clearInterval(intID);
   }, []);
   
-  
     return (
         <>
-      <h2>The clock</h2>
+      <h2 className={s.title}>The clock</h2>
         <p className={s[clsx(classNames === 'night' ? 'night' : 'day')]}>{timeString}</p>
             </>
   );
