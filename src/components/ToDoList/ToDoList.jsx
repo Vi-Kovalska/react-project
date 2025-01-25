@@ -3,7 +3,7 @@ import s from './ToDoList.module.css'
 import ToDoItem from './ToDoItem'
 import { useState, useEffect } from 'react'
 
-const ToDoList = ({ todosData }) => {
+const ToDoList = () => {
     //                                        перевіряємо щоб нет було null or undefined
     const [todos, setTodos] = useState(() => JSON.parse(window.localStorage.getItem('saved-task')) ?? []
         // const savedData = JSON.parse(window.localStorage.getItem('saved-task'));
