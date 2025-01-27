@@ -1,6 +1,10 @@
 import { useState, useEffect } from 'react'
 import './App.css'
 import clsx from "clsx";
+
+import colors from '../colors.json';
+import initialTasks from '../tasks.json';
+
 import Container from './Container/Container';
 import Clock from './Clock/Clock'
 import Counter from './Counter/Counter';
@@ -11,9 +15,8 @@ import Vote from './Vote/Vote';
 import Form from './FormFilterTaskList/Form/Form';
 import Filter from './FormFilterTaskList/Filter/Filter';
 import TaskList from './FormFilterTaskList/TaskList/TaskList';
-
-import colors from '../colors.json';
-import initialTasks from '../tasks.json';
+import ControlledForm from './ControlledForm/ControlledForm';
+import UseIdExample from './useIdExample/useIdExample';
 
 function App() {
   // Modal region
@@ -54,6 +57,12 @@ return [...prevTasks, newTask]
         <Form onAdd={onAdd} />
         <Filter value={filter} onFilter={setFilter} />
         <TaskList tasks={visibleTasks} onDelete={onDelete}/>
+      </Container>
+      <Container>
+        <ControlledForm/>
+      </Container>
+      <Container>
+        <UseIdExample/>
       </Container>
     </>
   )
