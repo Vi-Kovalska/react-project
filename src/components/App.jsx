@@ -17,6 +17,8 @@ import Filter from './FormFilterTaskList/Filter/Filter';
 import TaskList from './FormFilterTaskList/TaskList/TaskList';
 import ControlledForm from './ControlledForm/ControlledForm';
 import UseIdExample from './useIdExample/useIdExample';
+import LangSwitcher from './LangSwitcher/LangSwitcher';
+import ImprovedCounter from './ImprovedCounter/ImprovedCounter';
 
 function App() {
   // Modal region
@@ -41,6 +43,13 @@ return [...prevTasks, newTask]
   }
   // якщо фільтр буде пустий ("") то інклюдс завжди поверне тру тому відмалюється у список всі таски 
   const visibleTasks = tasks.filter(task => task.text.toLowerCase().includes(filter.toLocaleLowerCase()));
+  // ControlledForm region
+  // ф-ція для забирання данних з форми, передаємо її через пропс на компонент з якого забираєм дані
+  const register = dataFromForm => {
+    console.log(dataFromForm);
+  }
+  // LangSwicher region
+const [lang, setLang] = useState("uk");
   return (
     <>
       <Container>
@@ -59,10 +68,16 @@ return [...prevTasks, newTask]
         <TaskList tasks={visibleTasks} onDelete={onDelete}/>
       </Container>
       <Container>
-        <ControlledForm/>
+        <ControlledForm register={register} />
       </Container>
       <Container>
         <UseIdExample/>
+      </Container>
+      <Container>
+        <LangSwitcher value={lang} onSelect={setLang}/>
+      </Container>
+      <Container>
+        <ImprovedCounter lsKey={new Date()}/>
       </Container>
     </>
   )

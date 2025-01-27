@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 import s from './ControlledForm.module.css'
-const ControlledForm = () => {
+const ControlledForm = ({register}) => {
     const [formData, setFormData] = useState({ userName: '', email: '', password: '', course: '', about: '', level:'middle', isAcceptedRules: false});
     const handleSubmit = (e) => {
         e.preventDefault();
-        // e.target.name.value.reset();
+        const form = e.target;
+        form.reset();
     }
     const handleChangeInput = (e) => {
         console.log(e.target.name);
@@ -13,11 +14,11 @@ const ControlledForm = () => {
         const { name, value, type } = e.target;
         // перезаписуємо стан для чекбоксу
         if (type === 'checkbox') {
-        return    setFormData(prev => ({...prev, [name]: !prev[name]}))
+            return setFormData(prev => ({ ...prev, [name]: !prev[name] }));
         }
         // розсипаємо, динамічно підставляємо [імя інпуту] та його значення. Для всіх інпуктів окрім ЧЕКБОКСА
         setFormData(prev => {
-            return { ...prev, [name]: value };
+          return  { ...prev, [name]: value };
         })
     }
     return (
