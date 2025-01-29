@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import s from './ControlledForm.module.css'
+
 const ControlledForm = ({register}) => {
     const [formData, setFormData] = useState({ userName: '', email: '', password: '', course: '', about: '', level:'middle', isAcceptedRules: false});
     const handleSubmit = (e) => {
@@ -22,7 +23,7 @@ const ControlledForm = ({register}) => {
         })
     }
     return (
-      <>
+      <div className={s.containerBG}>
             <h2>The controlled form</h2>
              <p>Join us!</p>
             <form onSubmit={handleSubmit} className={s.form}>
@@ -73,7 +74,7 @@ const ControlledForm = ({register}) => {
                 </label>
                 <button type='submit'>Submit</button>
     </form>
-      </>)
+      </div>)
 }
 
 export default ControlledForm

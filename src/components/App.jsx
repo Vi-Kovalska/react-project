@@ -19,6 +19,8 @@ import ControlledForm from './ControlledForm/ControlledForm';
 import UseIdExample from './useIdExample/useIdExample';
 import LangSwitcher from './LangSwitcher/LangSwitcher';
 import ImprovedCounter from './ImprovedCounter/ImprovedCounter';
+import FileUploader from './FileUploader/FileUploader.tsx';
+import FormFormikAndYup from './FormFormikAndYup/FormFormikAndYup.jsx';
 
 function App() {
   // Modal region
@@ -64,11 +66,14 @@ const [lang, setLang] = useState("uk");
       <Container>
         <h2>Tasks list with filter</h2>
         <Form onAdd={onAdd} />
-        <Filter value={filter} onFilter={setFilter} />
+        <Filter value={filter} setFilter={setFilter} />
         <TaskList tasks={visibleTasks} onDelete={onDelete}/>
       </Container>
       <Container>
         <ControlledForm register={register} />
+      </Container>
+      <Container>
+        <FormFormikAndYup/>
       </Container>
       <Container>
         <UseIdExample/>
@@ -78,6 +83,9 @@ const [lang, setLang] = useState("uk");
       </Container>
       <Container>
         <ImprovedCounter lsKey={new Date()}/>
+      </Container>
+      <Container>
+        <FileUploader/>
       </Container>
     </>
   )

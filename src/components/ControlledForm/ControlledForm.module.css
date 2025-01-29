@@ -1,9 +1,27 @@
+.containerBG{
+ background-image: linear-gradient(rgba(46, 47, 66, 0.075),
+     rgba(46, 47, 66, 0.486)),
+ url('.../images/forest-bg.png');
+ background-repeat: no-repeat;
+ background-position: center;
+ background-size: cover;
+ max-width: 100%;
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ justify-content: center;
+}
 .form{
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 20px;
+    border: 1px solid black;
+    border-radius: 8px;
+    height: auto;
+    width: 400px;
+    padding: 10px;
 }
 .label{
     display: flex;

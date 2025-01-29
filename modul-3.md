@@ -633,50 +633,74 @@ npm install formik-->
 	<option value="o3">Option 3</option>
 </Field>-->
 
+<!-- import { useId } from "react";
+import { Formik, Form, Field } from "formik";
+
+const initialValues = {
+  username: "",
+  email: "",
+  message: "",
+  level: "good",
+};
+
+const FeedbackForm = () => {
+  const nameFieldId = useId();
+  const emailFieldId = useId();
+  const msgFieldId = useId();
+  const levelFieldId = useId();
+
+  const handleSubmit = (values, actions) => {
+    console.log(values);
+    actions.resetForm();
+  };
+
+  return (
+    <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+      <Form>
+        <label htmlFor={nameFieldId}>Username</label>
+        <Field type="text" name="username" id={nameFieldId} />
+
+        <label htmlFor={emailFieldId}>Email</label>
+        <Field type="email" name="email" id={emailFieldId} />
+
+        <label htmlFor={msgFieldId}>Message</label>
+        <Field as="textarea" name="message" id={msgFieldId} rows="5" />
+
+        <label htmlFor={levelFieldId}>Service satisfaction level</label>
+        <Field as="select" name="level" id={levelFieldId}>
+          <option value="good">Good</option>
+          <option value="neutral">Neutral</option>
+          <option value="bad">Bad</option>
+        </Field>
+
+        <button type="submit">Submit</button>
+      </Form>
+    </Formik>
+  );
+};
+ -->
 <!-- Валідація
  В Formik валідація виконується автоматично, все, що потрібно зробити, це налаштувати її. Для цього необхідно встановити бібліотеку валідації Yup.
-
-
-
 npm install yup
 
-
-
 Після цього імпортуємо бібліотеку валідації в компонент форми.
-
-
-
 import * as Yup from "yup";
 
-
-
 Валідатор Yup використовує схеми валідації для перевірки значень. Об'являємо схему валідації об'єкта, оскільки значення форми зберігаються в стані Formik у вигляді об'єкта з властивостями.
-
-
-
 const FeedbackSchema = Yup.object().shape({});
-
-
 
 У цьому об'єкті описуємо валідацію для кожної властивості об'єкта initialValues.
 
-
-
 Почнемо з імені користувача.
-
 const FeedbackSchema = Yup.object().shape({
   username: Yup.string().min(2, "Too Short!").max(50, "Too Long!").required("Required")
 });
 
-
-
 У цьому коді для поля username ми валідуємо наступне:
-
 Це рядок
 Рядок повинен бути принаймні 2 символи
 Рядок повинен бути максимум 50 символів
 Властивість обов'язкова для заповнення
-
 
 Функції Yup.string(), Yup.min(), Yup.max(), Yup.required() і інші - це валідатори, які дозволяють додати певний критерій валідації. Кожен валідатор може приймати від нуля до двох параметрів.
 
