@@ -4,7 +4,13 @@ export const authContext = createContext();
 
 export const AuthentProvider = ({children}) => {
     const [userName, setUserName] = useState('');
-    const login = (user) => setUserName(user);
+    // const savedDataUser = JSON.parse(window.localStorage.getItem('dataUser')) ?? '';
+    const login = (user) => {
+        // if (savedDataUser) {
+            
+        // }
+        setUserName(user);
+    }
     const logout = () => setUserName('');
 
     const userValue = {

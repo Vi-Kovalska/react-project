@@ -33,14 +33,17 @@ import Header from './Header/Header.jsx';
 import Footer from './Footer/Footer.jsx';
 import { authContext } from './Provider/AuthentProvider/AuthentProvider.jsx';
 import FormLogin from './FormLogin/FormLogin.jsx';
+import { themeContext } from './Provider/ThemeProvider/ThemeProvider.jsx';
+import clsx from 'clsx';
 // import Player from './Player/Player.jsx';
 
 
 
 
 function App() {
-  // context for login
-  const {userName} = useContext(authContext)
+  // context for login and for theme toggle
+  const { userName } = useContext(authContext);
+  const { theme } = useContext(themeContext);
   // Modal region
   const [isOpen, setIsOpen] = useState(false);
   const openModal = () => setIsOpen(true);
@@ -120,12 +123,10 @@ return [...prevTasks, newTask]
 
   return (
     userName ? <>
-      <Header/>
-      <Container>
-        <button onClick={openModal}>Open modal</button>
-        {isOpen && <Modal closeModal={closeModal} title={'Hello. How are you?'} />}
-      </Container>
-      <Container><Clock /></Container>
+      <Header> <button onClick={openModal}>Modal</button>
+        {isOpen && <Modal closeModal={closeModal} title={'Hello. How are you?'} />}</Header>
+      <main className={clsx(theme === 'light' ? 'light' : 'dark')}>
+      <Clock />
       <Container><Counter /></Container>
       <Container><ColorPicker array={colors} /></Container>
       <Container> <ToDoList/></Container>
@@ -178,7 +179,8 @@ return [...prevTasks, newTask]
       </Container>
       <Container>
         <ForwardRefExample/>
-      </Container>
+        </Container>
+        </main>
       <Footer/>
     </> : <FormLogin/>
   )

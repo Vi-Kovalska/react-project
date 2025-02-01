@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 import s from './FormLogin.module.css'
 import { useContext } from 'react'
 import { authContext } from '../Provider/AuthentProvider/AuthentProvider'
+import toast from 'react-hot-toast'
 const FormLogin = () => {
     const { login } = useContext(authContext);
     const initialValues = {
@@ -13,11 +14,14 @@ const FormLogin = () => {
         agree: false,
     }
     const onSubmit = (values, actions) => {
-        console.log(values.userName);
-        login(values.userName)
-    actions.resetForm();
+        login(values.userName);
+        window.localStorage.setItem('dataUser', JSON.stringify(values));
+        actions.resetForm();
+        toast.success('Authentication was successful!');
     }
-    const onlyLetters = /^[A-Za-zA-Яа-яЄєІіЇїҐґ-\s]+$/;
+
+
+const onlyLetters = /^[A-Za-zA-Яа-яЄєІіЇїҐґ-\s]+$/;
 const regularExEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
     const validationSchema = Yup.object().shape({
@@ -29,7 +33,7 @@ const regularExEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   return (
       <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
           <div className={s.wrapper}>
-          <Form className={s.form}>
+              <Form className={s.form}>
               <Field type='text' name='userName' placeholder='Create your user name' />
               <Field type='email' name='email' placeholder='Your email' />
               <ErrorMessage name='userName' component='p'/>
