@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import './App.css'
-import clsx from "clsx";
+import toast from 'react-hot-toast';
+import * as apiFunctions from '../services/api.js';
 
 import colors from '../colors.json';
 import initialTasks from '../tasks.json';
@@ -21,8 +22,25 @@ import LangSwitcher from './LangSwitcher/LangSwitcher';
 import ImprovedCounter from './ImprovedCounter/ImprovedCounter';
 import FileUploader from './FileUploader/FileUploader.tsx';
 import FormFormikAndYup from './FormFormikAndYup/FormFormikAndYup.jsx';
+import ArticleList from './ArticleFinder/ArticleList/ArticleList.jsx';
+import Loader from './ArticleFinder/Loader/Loader.jsx';
+import Error from './ArticleFinder/Error/Error.jsx';
+import SearchBar from './ArticleFinder/SearchBar/SearchBar.jsx';
+import UseMemoExample from './useMemoExample/useMemoExample.jsx';
+import UseRefExample from './UseRefExample/UseRefExample.jsx';
+import { ForwardRefExample } from './UseRefExample/ForwardRefExample.jsx';
+import Header from './Header/Header.jsx';
+import Footer from './Footer/Footer.jsx';
+import { authContext } from './Provider/AuthentProvider/AuthentProvider.jsx';
+import FormLogin from './FormLogin/FormLogin.jsx';
+// import Player from './Player/Player.jsx';
+
+
+
 
 function App() {
+  // context for login
+  const {userName} = useContext(authContext)
   // Modal region
   const [isOpen, setIsOpen] = useState(false);
   const openModal = () => setIsOpen(true);
@@ -51,9 +69,58 @@ return [...prevTasks, newTask]
     console.log(dataFromForm);
   }
   // LangSwicher region
-const [lang, setLang] = useState("uk");
+  const [lang, setLang] = useState("uk");
+  // ArticleFinder with API region
+  const [articles, setArticles] = useState([]);
+  const [isLoad, setIsLoad] = useState(false);
+  const [isError, setIsError] = useState(false);
+  const [newTopic, setNewTopic] = useState('');
+  const [page, setPage] = useState(0);
+  const [perPage, setPerPage] = useState(10);
+  const [nbHits, setNbHits] = useState(0);
+  const [maxPage, setMaxPage] = useState(0);
+  useEffect(() => {
+    if (!newTopic) return;
+
+    const getData = async () => {
+      try {
+        setIsError(false);
+        setIsLoad(true);
+        const { hits, nbHits, nbPage } = await apiFunctions.fetchArticlesWithTopic(newTopic, page, perPage);
+        setArticles(prev => [...prev, ...hits]);
+        setNbHits(nbHits);
+        setMaxPage(nbPage);
+    } catch {
+        setIsError(true);
+        toast.error('Server is dead. Try again later:)')
+   } finally {
+        setIsLoad(false);
+      }
+    }
+    
+  getData();
+  }, [newTopic, page, perPage])
+
+  const useNewTopic = (newSearch) => {
+    setNewTopic(newSearch);
+    setArticles([]);
+    setPage(0);
+    setPerPage(10);
+}
+
+  const updatePerPage = (newPer) => {
+    
+    if (newPer > nbHits) {
+     return toast.error('The number of visible articles cannot be more than their total number');
+    }
+ 
+    setArticles([]);
+    setPerPage(newPer);
+}
+
   return (
-    <>
+    userName ? <>
+      <Header/>
       <Container>
         <button onClick={openModal}>Open modal</button>
         {isOpen && <Modal closeModal={closeModal} title={'Hello. How are you?'} />}
@@ -82,12 +149,38 @@ const [lang, setLang] = useState("uk");
         <LangSwitcher value={lang} onSelect={setLang}/>
       </Container>
       <Container>
-        <ImprovedCounter lsKey={new Date()}/>
+        <ImprovedCounter lsKey={crypto.randomUUID()}/>
       </Container>
       <Container>
         <FileUploader/>
       </Container>
-    </>
+      <Container>
+        <h2>Search articles by topics</h2>
+        <SearchBar func={useNewTopic} updatePerPage={updatePerPage}/>
+        <ArticleList data={articles} />
+        {isLoad && <Loader />}
+        {isError && <Error />}
+        {articles.length > 0 && <button onClick={() => {
+          if (page >= maxPage) {
+           return toast.error('Out of articles!');
+          }
+        return setPage(prev => prev + 1)
+        }}>Load more</button>}
+      </Container>
+      <Container>
+        {/* <Player source={'https://videos.pexels.com/video-files/1448735/1448735-uhd_2732_1440_24fps.mp4'}/> */}
+      </Container>
+      <Container>
+      <UseMemoExample/>
+      </Container>
+      <Container>
+        <UseRefExample/>
+      </Container>
+      <Container>
+        <ForwardRefExample/>
+      </Container>
+      <Footer/>
+    </> : <FormLogin/>
   )
 }
 

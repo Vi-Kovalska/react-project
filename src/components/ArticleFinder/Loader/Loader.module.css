@@ -1,0 +1,10 @@
+.loaderIcon:hover{
+        aspect-ratio: 1;
+animation: spin 2s infinite linear;
+    transform: rotate(1turn);
+}
+@keyframes spin {
+    100% {
+        transform: rotate(360deg);
+    }
+}

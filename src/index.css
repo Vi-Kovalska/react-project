@@ -20,13 +20,14 @@ body {
   min-height: 100vh;
 }
 a {
+  font-size: 18px;
   text-decoration: none;
-  color: #ffaa64;
-  text-shadow: #1a1a1a;
+  color: #000000;
   transition: color font-weight 400ms cubic-bezier(0.215, 0.610, 0.355, 1);
-  &:hover{
+  &:hover, &:focus{
     color:#eb3b3b;
-    font-weight: 18px;
+    font-size: 20px;
+    font-weight: 500;
   }
 }
 
@@ -80,9 +81,7 @@ img {
     color: #213547;
     background-color: #ffffff;
   }
-  a:hover {
-    color: #ffaa64;
-  }
+  
   button {
     background-color: #f9f9f9;
   }
